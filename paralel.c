@@ -28,15 +28,18 @@ void printDivisors(int n)
 }
 
 void* threadFunc(void* a){
-    pthread_mutex_lock(&lock);
+    
     if (isEmpty(queue) == false){
         int i;
-       printDivisors(dequeue(queue));
-       pthread_mutex_unlock(&lock);
+        pthread_mutex_lock(&lock);
+        int currProcess = dequeue(queue);
+        pthread_mutex_unlock(&lock);
+       printDivisors(currProcess);
+       
        threadFunc(NULL);
        
     }
-    pthread_mutex_unlock(&lock);
+    
     return NULL;
 }
 
