@@ -2,13 +2,20 @@
 #include <stdlib.h>
 #include <time.h>
 #include "queue.c"
+#include <string.h>
 
 void printDivisors(int n)
 {
-    printf("\n%d: ", n);
-    for (int i = 1; i <= n; i++)
-        if (n % i == 0)
-            printf("%d ", i);
+    char destination[5000];
+    sprintf(destination, "\n%d: ", n);
+    for (int i = 1; i <= n; i++){
+        if (n % i == 0){
+            char strN[5000];
+            sprintf(strN, "%d ", i);
+            strcat(destination, strN);
+        }
+    }
+    printf("%s ", destination);
 }
 
 int main()
