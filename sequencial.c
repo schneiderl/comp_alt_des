@@ -3,6 +3,7 @@
 #include <time.h>
 #include "queue.c"
 #include <string.h>
+typedef struct timespec Time;
 
 void printDivisors(int n)
 {
@@ -20,7 +21,9 @@ void printDivisors(int n)
 
 int main()
 {
-    clock_t begin = clock();
+    double t;
+    Time start_time, end_time;
+    clock_gettime(CLOCK_THREAD_CPUTIME_ID, (struct timespec *) &start_time);
 
     int num, i;
     scanf("%d", &num);
@@ -37,10 +40,10 @@ int main()
         printDivisors(dequeue(queue));
     }
     
-    clock_t end = clock();
-    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    clock_gettime(CLOCK_THREAD_CPUTIME_ID, (struct timespec *) &end_time);
+    t = (double) (end_time.tv_sec - start_time.tv_sec ) + (double) (end_time.tv_nsec - start_time.tv_nsec) * 1e-9;
 
-    printf("\nTOTAL TIME SPENT: %f ", time_spent);
+    printf("\nTOTAL TIME SPENT: %f ", t);
     return 0;
 }
 
