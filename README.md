@@ -3,6 +3,10 @@
 > 1. gcc -o sequencial sequencial.c
 > 2. ./sequencial < sequential_test_file
 
+# run the paralel solution
+
+> 1. gcc -pthread -o paralel paralel.c
+> 2. ./paralel < paralel_test_file
 
 ### structure of the sequential test file
 
