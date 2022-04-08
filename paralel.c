@@ -6,6 +6,7 @@
 #include <pthread.h>
 #include <stdbool.h>
 #include <string.h>
+#include <sys/time.h>
 
 //TODO: usar mutex pra controlar a fila. periogoso fazer dequeues sem bloquear
 //TODO: na printDivisors(), ao invés de printar diretamente, concatenar os divisores e printar
@@ -47,8 +48,9 @@ void* threadFunc(void* a){
 int main()
 {
     double t;
-    Time start_time, end_time;
-    clock_gettime(CLOCK_THREAD_CPUTIME_ID, (struct timespec *) &start_time);
+    struct timeval begin, end;
+    gettimeofday(&begin, 0);
+
 
     int num, i, nofthreads;
     scanf("%d", &nofthreads); 
@@ -79,10 +81,12 @@ int main()
         pthread_join(threads[i], NULL);
     }
 
-    clock_gettime(CLOCK_THREAD_CPUTIME_ID, (struct timespec *) &end_time);
-    t = (double) (end_time.tv_sec - start_time.tv_sec ) + (double) (end_time.tv_nsec - start_time.tv_nsec) * 1e-9;
+    gettimeofday(&end, 0);
+    long seconds = end.tv_sec - begin.tv_sec;
+    long microseconds = end.tv_usec - begin.tv_usec;
+    double elapsed = seconds + microseconds*1e-6;
 
-    printf("\nTOTAL TIME SPENT: %f ", t);
+    printf("\nTOTAL TIME SPENT: %.3f ", elapsed);
 
     return 0;
 }
